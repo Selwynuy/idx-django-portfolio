@@ -4,6 +4,7 @@ from . import views
 app_name = 'portfolio'
 
 urlpatterns = [
-    path('', views.HomeView.as_view(), name='home'),
+    path('', views.SinglePageView.as_view(), name='home'),
+    # Keep old URLs for backward compatibility
     path('about/', views.AboutView.as_view(), name='about'),
 ]
