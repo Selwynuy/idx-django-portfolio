@@ -9,7 +9,7 @@ from .forms import ContactForm
 
 
 class SinglePageView(TemplateView):
-    template_name = 'portfolio/single_page.html'
+    template_name = 'portfolio/home.html'
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
