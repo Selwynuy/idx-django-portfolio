@@ -1,8 +1,6 @@
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User
-from portfolio.models import Profile, Skill, Experience
-from projects.models import Project, ProjectFeature
-from contact.models import ContactMessage
+from portfolio.models import Profile, Skill, Experience, Project, ProjectFeature, ContactMessage
 
 
 class Command(BaseCommand):
