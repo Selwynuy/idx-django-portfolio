@@ -1,0 +1,190 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - {{ profile.first_name|default:"Developer" }} {{ profile.last_name|default:"Portfolio" }}{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="gradient-bg min-h-screen flex items-center">
+    <div class="max-w-7xl mx-auto px-4 py-20">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div class="text-white">
+                <h1 class="text-5xl lg:text-6xl font-bold mb-6">
+                    Hi, I'm <span class="text-yellow-300">{{ profile.first_name|default:"Developer" }}</span>
+                </h1>
+                <h2 class="text-2xl lg:text-3xl mb-6 text-gray-200">
+                    {{ profile.title|default:"Full Stack Developer" }}
+                </h2>
+                <p class="text-xl mb-8 text-gray-200">
+                    {{ profile.bio|default:"Passionate about creating amazing web experiences and solving complex problems with code." }}
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="{% url 'projects:project_list' %}" class="bg-yellow-400 text-gray-900 px-8 py-3 rounded-lg font-semibold hover:bg-yellow-300 transition duration-300 text-center">
+                        View My Work
+                    </a>
+                    <a href="{% url 'contact:contact' %}" class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-gray-900 transition duration-300 text-center">
+                        Get In Touch
+                    </a>
+                </div>
+            </div>
+            <div class="flex justify-center">
+                {% if profile.profile_image %}
+                    <img src="{{ profile.profile_image.url }}" alt="{{ profile.first_name }}" class="w-80 h-80 rounded-full object-cover shadow-2xl">
+                {% else %}
+                    <div class="w-80 h-80 rounded-full bg-white bg-opacity-20 flex items-center justify-center">
+                        <i class="fas fa-user text-8xl text-white"></i>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Skills Section -->
+{% if featured_skills %}
+<section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold text-gray-800 mb-4">Skills & Technologies</h2>
+            <p class="text-xl text-gray-600">Technologies I work with</p>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
+            {% for skill in featured_skills %}
+            <div class="text-center group">
+                <div class="bg-gray-100 rounded-lg p-6 hover:shadow-lg transition duration-300 hover-scale">
+                    {% if skill.icon %}
+                        <i class="{{ skill.icon }} text-4xl text-blue-600 mb-4"></i>
+                    {% else %}
+                        <div class="w-12 h-12 bg-blue-600 rounded-lg mx-auto mb-4 flex items-center justify-center">
+                            <span class="text-white font-bold">{{ skill.name|first }}</span>
+                        </div>
+                    {% endif %}
+                    <h3 class="font-semibold text-gray-800">{{ skill.name }}</h3>
+                    <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+                        <div class="bg-blue-600 h-2 rounded-full" style="width: {{ skill.proficiency }}%"></div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Featured Projects Section -->
+{% if featured_projects %}
+<section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold text-gray-800 mb-4">Featured Projects</h2>
+            <p class="text-xl text-gray-600">Some of my recent work</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for project in featured_projects %}
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition duration-300 hover-scale">
+                {% if project.featured_image %}
+                    <img src="{{ project.featured_image.url }}" alt="{{ project.title }}" class="w-full h-48 object-cover">
+                {% else %}
+                    <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
+                        <i class="fas fa-image text-4xl text-gray-400"></i>
+                    </div>
+                {% endif %}
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">{{ project.title }}</h3>
+                    <p class="text-gray-600 mb-4">{{ project.description|truncatewords:20 }}</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        {% for tech in project.get_technologies_list|slice:":3" %}
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">{{ tech }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="flex gap-2">
+                        {% if project.live_url %}
+                            <a href="{{ project.live_url }}" target="_blank" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-300">
+                                <i class="fas fa-external-link-alt mr-2"></i>Live Demo
+                            </a>
+                        {% endif %}
+                        {% if project.github_url %}
+                            <a href="{{ project.github_url }}" target="_blank" class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition duration-300">
+                                <i class="fab fa-github mr-2"></i>Code
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-12">
+            <a href="{% url 'projects:project_list' %}" class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition duration-300">
+                View All Projects
+            </a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- About Preview Section -->
+<section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+                <h2 class="text-4xl font-bold text-gray-800 mb-6">About Me</h2>
+                <p class="text-lg text-gray-600 mb-6">
+                    {{ profile.bio|default:"I'm a passionate developer with a love for creating innovative solutions and beautiful user experiences. With expertise in both frontend and backend technologies, I enjoy turning complex problems into simple, elegant solutions." }}
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="{% url 'portfolio:about' %}" class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition duration-300 text-center">
+                        Learn More About Me
+                    </a>
+                    {% if profile.resume %}
+                        <a href="{{ profile.resume.url }}" target="_blank" class="border-2 border-blue-600 text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-600 hover:text-white transition duration-300 text-center">
+                            <i class="fas fa-download mr-2"></i>Download Resume
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-6">
+                <div class="text-center">
+                    <div class="bg-blue-100 rounded-lg p-6">
+                        <i class="fas fa-code text-4xl text-blue-600 mb-4"></i>
+                        <h3 class="text-xl font-bold text-gray-800">Clean Code</h3>
+                        <p class="text-gray-600">Writing maintainable and scalable code</p>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <div class="bg-green-100 rounded-lg p-6">
+                        <i class="fas fa-mobile-alt text-4xl text-green-600 mb-4"></i>
+                        <h3 class="text-xl font-bold text-gray-800">Responsive Design</h3>
+                        <p class="text-gray-600">Mobile-first approach to design</p>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <div class="bg-purple-100 rounded-lg p-6">
+                        <i class="fas fa-rocket text-4xl text-purple-600 mb-4"></i>
+                        <h3 class="text-xl font-bold text-gray-800">Performance</h3>
+                        <p class="text-gray-600">Optimized for speed and efficiency</p>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <div class="bg-yellow-100 rounded-lg p-6">
+                        <i class="fas fa-users text-4xl text-yellow-600 mb-4"></i>
+                        <h3 class="text-xl font-bold text-gray-800">Team Player</h3>
+                        <p class="text-gray-600">Collaborative and communicative</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact CTA Section -->
+<section class="py-20 gradient-bg">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+        <h2 class="text-4xl font-bold text-white mb-6">Let's Work Together</h2>
+        <p class="text-xl text-gray-200 mb-8">
+            Have a project in mind? I'd love to hear about it. Let's discuss how we can bring your ideas to life.
+        </p>
+        <a href="{% url 'contact:contact' %}" class="bg-yellow-400 text-gray-900 px-8 py-3 rounded-lg font-semibold hover:bg-yellow-300 transition duration-300 inline-block">
+            Get In Touch
+        </a>
+    </div>
+</section>
+{% endblock %}

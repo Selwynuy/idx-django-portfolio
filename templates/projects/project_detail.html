@@ -1,0 +1,210 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ project.title }} - {{ profile.first_name|default:"Developer" }} {{ profile.last_name|default:"Portfolio" }}{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="bg-gray-800 text-white py-20">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+                <div class="flex items-center mb-4">
+                    <span class="bg-blue-600 text-white text-sm px-3 py-1 rounded-full mr-3">{{ project.get_project_type_display }}</span>
+                    {% if project.is_featured %}
+                        <span class="bg-yellow-500 text-white text-sm px-3 py-1 rounded-full">Featured</span>
+                    {% endif %}
+                </div>
+                <h1 class="text-4xl lg:text-5xl font-bold mb-6">{{ project.title }}</h1>
+                <p class="text-xl text-gray-300 mb-8">{{ project.description }}</p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    {% if project.live_url %}
+                        <a href="{{ project.live_url }}" target="_blank" class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition duration-300 text-center">
+                            <i class="fas fa-external-link-alt mr-2"></i>View Live Demo
+                        </a>
+                    {% endif %}
+                    {% if project.github_url %}
+                        <a href="{{ project.github_url }}" target="_blank" class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-gray-900 transition duration-300 text-center">
+                            <i class="fab fa-github mr-2"></i>View Source Code
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="flex justify-center">
+                {% if project.featured_image %}
+                    <img src="{{ project.featured_image.url }}" alt="{{ project.title }}" class="w-full max-w-lg rounded-lg shadow-2xl">
+                {% else %}
+                    <div class="w-full max-w-lg h-80 bg-gray-700 rounded-lg shadow-2xl flex items-center justify-center">
+                        <i class="fas fa-image text-6xl text-gray-400"></i>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Project Details Section -->
+<section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            <!-- Main Content -->
+            <div class="lg:col-span-2">
+                {% if project.long_description %}
+                    <div class="mb-12">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-6">About This Project</h2>
+                        <div class="prose prose-lg max-w-none text-gray-600">
+                            {{ project.long_description|linebreaks }}
+                        </div>
+                    </div>
+                {% endif %}
+
+                <!-- Project Features -->
+                {% if project.features.all %}
+                    <div class="mb-12">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-6">Key Features</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {% for feature in project.features.all %}
+                                <div class="bg-gray-50 rounded-lg p-6">
+                                    <h3 class="text-xl font-semibold text-gray-800 mb-3">{{ feature.title }}</h3>
+                                    <p class="text-gray-600">{{ feature.description }}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+
+                <!-- Project Images -->
+                {% if project.images.all %}
+                    <div class="mb-12">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-6">Project Screenshots</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {% for image in project.images.all %}
+                                <div class="bg-gray-100 rounded-lg overflow-hidden">
+                                    <img src="{{ image.image.url }}" alt="{{ image.caption|default:project.title }}" class="w-full h-64 object-cover">
+                                    {% if image.caption %}
+                                        <div class="p-4">
+                                            <p class="text-gray-600 text-sm">{{ image.caption }}</p>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Sidebar -->
+            <div class="lg:col-span-1">
+                <div class="sticky top-24">
+                    <!-- Technologies Used -->
+                    <div class="bg-gray-50 rounded-lg p-6 mb-8">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">Technologies Used</h3>
+                        <div class="flex flex-wrap gap-2">
+                            {% for tech in project.get_technologies_list %}
+                                <span class="bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded-full">{{ tech }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Project Links -->
+                    <div class="bg-gray-50 rounded-lg p-6 mb-8">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">Project Links</h3>
+                        <div class="space-y-3">
+                            {% if project.live_url %}
+                                <a href="{{ project.live_url }}" target="_blank" class="flex items-center text-blue-600 hover:text-blue-800 transition duration-300">
+                                    <i class="fas fa-external-link-alt mr-3"></i>
+                                    <span>Live Demo</span>
+                                </a>
+                            {% endif %}
+                            {% if project.github_url %}
+                                <a href="{{ project.github_url }}" target="_blank" class="flex items-center text-gray-600 hover:text-gray-800 transition duration-300">
+                                    <i class="fab fa-github mr-3"></i>
+                                    <span>Source Code</span>
+                                </a>
+                            {% endif %}
+                            {% if project.demo_url %}
+                                <a href="{{ project.demo_url }}" target="_blank" class="flex items-center text-green-600 hover:text-green-800 transition duration-300">
+                                    <i class="fas fa-play mr-3"></i>
+                                    <span>Demo Video</span>
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Project Info -->
+                    <div class="bg-gray-50 rounded-lg p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">Project Info</h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Type:</span>
+                                <span class="font-semibold">{{ project.get_project_type_display }}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Created:</span>
+                                <span class="font-semibold">{{ project.created_at|date:"M Y" }}</span>
+                            </div>
+                            {% if project.updated_at != project.created_at %}
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Updated:</span>
+                                    <span class="font-semibold">{{ project.updated_at|date:"M Y" }}</span>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Related Projects Section -->
+{% if related_projects %}
+<section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold text-gray-800 mb-4">Related Projects</h2>
+            <p class="text-xl text-gray-600">Other {{ project.get_project_type_display|lower }} projects you might like</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for related_project in related_projects %}
+                <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300 hover-scale">
+                    {% if related_project.featured_image %}
+                        <img src="{{ related_project.featured_image.url }}" alt="{{ related_project.title }}" class="w-full h-48 object-cover">
+                    {% else %}
+                        <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
+                            <i class="fas fa-image text-4xl text-gray-400"></i>
+                        </div>
+                    {% endif %}
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">{{ related_project.title }}</h3>
+                        <p class="text-gray-600 mb-4">{{ related_project.description|truncatewords:15 }}</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            {% for tech in related_project.get_technologies_list|slice:":3" %}
+                                <span class="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded">{{ tech }}</span>
+                            {% endfor %}
+                        </div>
+                        <a href="{{ related_project.get_absolute_url }}" class="text-blue-600 hover:text-blue-800 font-semibold">
+                            View Project <i class="fas fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Navigation -->
+<section class="py-12 bg-white border-t">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+            <a href="{% url 'projects:project_list' %}" class="flex items-center text-blue-600 hover:text-blue-800 transition duration-300">
+                <i class="fas fa-arrow-left mr-2"></i>
+                Back to All Projects
+            </a>
+            <a href="{% url 'contact:contact' %}" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition duration-300">
+                Interested in This Project?
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

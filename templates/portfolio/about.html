@@ -1,0 +1,193 @@
+{% extends 'base.html' %}
+
+{% block title %}About - {{ profile.first_name|default:"Developer" }} {{ profile.last_name|default:"Portfolio" }}{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="bg-gray-800 text-white py-20">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="text-center">
+            <h1 class="text-5xl font-bold mb-6">About Me</h1>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                Get to know more about my journey, skills, and what drives me as a developer
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Profile Section -->
+<section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+                {% if profile.profile_image %}
+                    <img src="{{ profile.profile_image.url }}" alt="{{ profile.first_name }}" class="w-full max-w-md mx-auto rounded-lg shadow-2xl">
+                {% else %}
+                    <div class="w-full max-w-md mx-auto h-96 bg-gray-200 rounded-lg shadow-2xl flex items-center justify-center">
+                        <i class="fas fa-user text-8xl text-gray-400"></i>
+                    </div>
+                {% endif %}
+            </div>
+            <div>
+                <h2 class="text-4xl font-bold text-gray-800 mb-6">
+                    {{ profile.first_name|default:"Developer" }} {{ profile.last_name|default:"Portfolio" }}
+                </h2>
+                <h3 class="text-2xl text-blue-600 mb-6">{{ profile.title|default:"Full Stack Developer" }}</h3>
+                <p class="text-lg text-gray-600 mb-6">
+                    {{ profile.bio|default:"I'm a passionate developer with a love for creating innovative solutions and beautiful user experiences. With expertise in both frontend and backend technologies, I enjoy turning complex problems into simple, elegant solutions." }}
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                    {% if profile.email %}
+                        <div class="flex items-center">
+                            <i class="fas fa-envelope text-blue-600 mr-3"></i>
+                            <span class="text-gray-600">{{ profile.email }}</span>
+                        </div>
+                    {% endif %}
+                    {% if profile.phone %}
+                        <div class="flex items-center">
+                            <i class="fas fa-phone text-blue-600 mr-3"></i>
+                            <span class="text-gray-600">{{ profile.phone }}</span>
+                        </div>
+                    {% endif %}
+                    {% if profile.location %}
+                        <div class="flex items-center">
+                            <i class="fas fa-map-marker-alt text-blue-600 mr-3"></i>
+                            <span class="text-gray-600">{{ profile.location }}</span>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="flex gap-4">
+                    {% if profile.resume %}
+                        <a href="{{ profile.resume.url }}" target="_blank" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition duration-300">
+                            <i class="fas fa-download mr-2"></i>Download Resume
+                        </a>
+                    {% endif %}
+                    <a href="{% url 'contact:contact' %}" class="border-2 border-blue-600 text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 hover:text-white transition duration-300">
+                        Contact Me
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Skills Section -->
+{% if skills %}
+<section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold text-gray-800 mb-4">Skills & Technologies</h2>
+            <p class="text-xl text-gray-600">Technologies I work with and my proficiency level</p>
+        </div>
+        
+        <!-- Skills by Category -->
+        {% regroup skills by category as skill_categories %}
+        {% for category in skill_categories %}
+            <div class="mb-12">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6 capitalize">{{ category.grouper }}</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {% for skill in category.list %}
+                        <div class="bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition duration-300">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="flex items-center">
+                                    {% if skill.icon %}
+                                        <i class="{{ skill.icon }} text-2xl text-blue-600 mr-3"></i>
+                                    {% else %}
+                                        <div class="w-8 h-8 bg-blue-600 rounded-lg mr-3 flex items-center justify-center">
+                                            <span class="text-white font-bold text-sm">{{ skill.name|first }}</span>
+                                        </div>
+                                    {% endif %}
+                                    <h4 class="font-semibold text-gray-800">{{ skill.name }}</h4>
+                                </div>
+                                <span class="text-sm text-gray-600">{{ skill.proficiency }}%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-blue-600 h-2 rounded-full transition-all duration-1000" style="width: {{ skill.proficiency }}%"></div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+<!-- Experience Section -->
+{% if experience %}
+<section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold text-gray-800 mb-4">Experience & Education</h2>
+            <p class="text-xl text-gray-600">My professional journey and educational background</p>
+        </div>
+        
+        <div class="relative">
+            <!-- Timeline line -->
+            <div class="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-blue-200"></div>
+            
+            {% for exp in experience %}
+                <div class="relative flex items-center mb-12 {% if forloop.counter|divisibleby:2 %}flex-row-reverse{% endif %}">
+                    <!-- Timeline dot -->
+                    <div class="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-blue-600 rounded-full z-10"></div>
+                    
+                    <!-- Content -->
+                    <div class="w-1/2 {% if forloop.counter|divisibleby:2 %}pr-8 text-right{% else %}pl-8{% endif %}">
+                        <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition duration-300">
+                            <div class="flex items-center mb-2">
+                                {% if exp.type == 'work' %}
+                                    <i class="fas fa-briefcase text-blue-600 mr-2"></i>
+                                {% elif exp.type == 'education' %}
+                                    <i class="fas fa-graduation-cap text-green-600 mr-2"></i>
+                                {% elif exp.type == 'certification' %}
+                                    <i class="fas fa-certificate text-purple-600 mr-2"></i>
+                                {% else %}
+                                    <i class="fas fa-project-diagram text-orange-600 mr-2"></i>
+                                {% endif %}
+                                <span class="text-sm font-semibold text-gray-500 uppercase tracking-wide">{{ exp.get_type_display }}</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">{{ exp.title }}</h3>
+                            <h4 class="text-lg text-blue-600 mb-2">{{ exp.company }}</h4>
+                            {% if exp.location %}
+                                <p class="text-gray-600 mb-2">
+                                    <i class="fas fa-map-marker-alt mr-1"></i>{{ exp.location }}
+                                </p>
+                            {% endif %}
+                            <p class="text-gray-500 mb-3">
+                                {{ exp.start_date|date:"M Y" }} - 
+                                {% if exp.is_current %}
+                                    Present
+                                {% else %}
+                                    {{ exp.end_date|date:"M Y" }}
+                                {% endif %}
+                            </p>
+                            <p class="text-gray-600">{{ exp.description }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Contact CTA Section -->
+<section class="py-20 gradient-bg">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+        <h2 class="text-4xl font-bold text-white mb-6">Let's Connect</h2>
+        <p class="text-xl text-gray-200 mb-8">
+            I'm always interested in new opportunities and exciting projects. Let's discuss how we can work together.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="{% url 'contact:contact' %}" class="bg-yellow-400 text-gray-900 px-8 py-3 rounded-lg font-semibold hover:bg-yellow-300 transition duration-300">
+                Send Me a Message
+            </a>
+            {% if profile.github_url %}
+                <a href="{{ profile.github_url }}" target="_blank" class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-gray-900 transition duration-300">
+                    <i class="fab fa-github mr-2"></i>View My GitHub
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}
