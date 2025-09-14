@@ -4,37 +4,69 @@
 
 {% block content %}
 <!-- Hero Section -->
-<section id="home" class="gradient-bg min-h-screen flex items-center">
-    <div class="max-w-7xl mx-auto px-4 py-20">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div class="text-white">
-                <h1 class="text-5xl lg:text-6xl font-bold mb-6">
-                    Hi, I'm <span class="text-yellow-300">{{ profile.first_name|default:"Developer" }}</span>
-                </h1>
-                <h2 class="text-2xl lg:text-3xl mb-6 text-gray-200">
-                    {{ profile.title|default:"Full Stack Developer" }}
-                </h2>
-                <p class="text-xl mb-8 text-gray-200">
-                    {{ profile.bio|default:"Passionate about creating amazing web experiences and solving complex problems with code." }}
-                </p>
-                <div class="flex flex-col sm:flex-row gap-4">
-                    <a href="#projects" class="bg-yellow-400 text-gray-900 px-8 py-3 rounded-lg font-semibold hover:bg-yellow-300 transition duration-300 text-center scroll-smooth">
-                        View My Work
-                    </a>
-                    <a href="#contact" class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-gray-900 transition duration-300 text-center scroll-smooth">
-                        Get In Touch
-                    </a>
+<section id="home" class="hero-section min-h-screen relative overflow-hidden">
+    <!-- Glow Effects -->
+    <div class="glow-effect glow-1"></div>
+    <div class="glow-effect glow-2"></div>
+    <div class="glow-effect glow-3"></div>
+    <div class="glow-effect glow-4"></div>
+    <div class="glow-effect glow-5"></div>
+    
+    <!-- Hero Headline - Outside of hero-content -->
+    <h1 class="hero-headline">Build Your Vision—Modern Web Development with Next.js</h1>
+    
+    <!-- Hero Content -->
+    <div class="hero-content">
+        <div class="hero-grid">
+            <!-- Left Section -->
+            <div class="hero-left">
+                <div class="hero-subsection">
+                    <h1 class="hero-title">Selwyn Uy</h1>
+                    <p class="hero-description">“I'm a Next.js Developer & Frontend Engineer Based in Philippines. I craft seamless, high-performance web experiences for businesses and creators</p>
+                    <ul class="services-list">
+                        <li>Web App Development</li>
+                        <li>Next.js Website Design</li>
+                        <li>API Integration</li>
+                        <li>Performance Optimization</li>
+                        <li>Responsive UI/UX</li>
+                    </ul>
                 </div>
             </div>
-            <div class="flex justify-center">
-                {% if profile.profile_image %}
-                    <img src="{{ profile.profile_image.url }}" alt="{{ profile.first_name }}" class="w-80 h-80 rounded-full object-cover shadow-2xl">
-                {% else %}
-                    <div class="w-80 h-80 rounded-full bg-white bg-opacity-20 flex items-center justify-center">
-                        <i class="fas fa-user text-8xl text-white"></i>
-                    </div>
-                {% endif %}
+
+            <!-- Center Section -->
+            <div class="hero-center">
+                <div class="hero-image-container">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=450&h=600&fit=crop&crop=face" 
+                         alt="Fashionable man sitting on marble floor in a tan suit" 
+                         class="hero-image">
+                </div>
             </div>
+
+            <!-- Right Section -->
+            <div class="hero-right">
+                <div class="stats-section">
+                    <div class="stat-item">
+                        <div class="stat-number">07</div>
+                        <div class="stat-label">Years Of Experience</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">10+</div>
+                        <div class="stat-label">Web Projects Delivered</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Satisfied Clients</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Button -->
+        <div class="cta-button-container">
+            <button class="cta-button">
+                <span class="cta-text">Hire Me To Make Yourself Better</span>
+                <div class="cta-arrow">→</div>
+            </button>
         </div>
     </div>
 </section>

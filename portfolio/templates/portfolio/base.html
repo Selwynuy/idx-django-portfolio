@@ -16,42 +16,26 @@
     <link rel="stylesheet" href="{% static 'portfolio/css/style.css' %}">
 </head>
 <body class="bg-gray-50">
-    <!-- Navigation -->
-    <nav class="bg-white shadow-lg fixed w-full z-50">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="flex justify-between items-center py-4">
-                <div class="flex items-center">
-                    <a href="{% url 'portfolio:home' %}" class="text-2xl font-bold text-gray-800">
-                        {{ profile.first_name|default:"Developer" }} {{ profile.last_name|default:"Portfolio" }}
-                    </a>
-                </div>
-                <div class="hidden md:flex space-x-8">
-                    <a href="#home" class="text-gray-600 hover:text-blue-600 transition duration-300 scroll-smooth">Home</a>
-                    <a href="#about" class="text-gray-600 hover:text-blue-600 transition duration-300 scroll-smooth">About</a>
-                    <a href="#projects" class="text-gray-600 hover:text-blue-600 transition duration-300 scroll-smooth">Projects</a>
-                    <a href="#contact" class="text-gray-600 hover:text-blue-600 transition duration-300 scroll-smooth">Contact</a>
-                </div>
-                <!-- Mobile menu button -->
-                <div class="md:hidden">
-                    <button id="mobile-menu-button" class="text-gray-600 hover:text-blue-600">
-                        <i class="fas fa-bars text-xl"></i>
-                    </button>
-                </div>
+
+    <!-- Main Navigation -->
+    <nav class="hero-nav">
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="#home" class="nav-link scroll-smooth">Home</a>
+                <a href="#about" class="nav-link scroll-smooth">About</a>
             </div>
-        </div>
-        <!-- Mobile menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
-            <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="#home" class="block px-3 py-2 text-gray-600 hover:text-blue-600 scroll-smooth">Home</a>
-                <a href="#about" class="block px-3 py-2 text-gray-600 hover:text-blue-600 scroll-smooth">About</a>
-                <a href="#projects" class="block px-3 py-2 text-gray-600 hover:text-blue-600 scroll-smooth">Projects</a>
-                <a href="#contact" class="block px-3 py-2 text-gray-600 hover:text-blue-600 scroll-smooth">Contact</a>
+            <div class="nav-center">
+                <div class="logo">Selwyn Uy</div>
+            </div>
+            <div class="nav-right">
+                <a href="#projects" class="nav-link scroll-smooth">Projects</a>
+                <a href="#contact" class="nav-link scroll-smooth">Contact</a>
             </div>
         </div>
     </nav>
 
     <!-- Main Content -->
-    <main class="pt-16">
+    <main>
         {% if messages %}
             <div class="max-w-7xl mx-auto px-4 py-4">
                 {% for message in messages %}

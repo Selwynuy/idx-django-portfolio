@@ -102,7 +102,7 @@
                                 <span class="text-sm text-gray-600">{{ skill.proficiency }}%</span>
                             </div>
                             <div class="w-full bg-gray-200 rounded-full h-2">
-                                <div class="bg-blue-600 h-2 rounded-full transition-all duration-1000" style="width: {{ skill.proficiency }}%"></div>
+                                <div class="bg-blue-600 h-2 rounded-full transition-all duration-1000" data-width="{{ skill.proficiency }}"></div>
                             </div>
                         </div>
                     {% endfor %}
