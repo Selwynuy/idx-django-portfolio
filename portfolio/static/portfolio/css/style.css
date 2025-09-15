@@ -204,6 +204,12 @@ html {
     text-align: center;
 }
 
+.hero-image-with-cta {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
 .hero-image-container {
     position: relative;
     max-width: 350px;
@@ -226,7 +232,7 @@ html {
 /* Right Section - Stats */
 .hero-right {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -261,16 +267,15 @@ html {
 
 /* CTA Button */
 .cta-button-container {
-    position: absolute;
-    right: 3rem;
-    top: 50%;
-    transform: translateY(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
     z-index: 20;
 }
 
 .cta-button {
-    width: 80px;
-    height: 80px;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
     background: #d4af7a;
     border: none;
@@ -280,7 +285,7 @@ html {
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .cta-button:hover {
@@ -288,27 +293,30 @@ html {
     transform: scale(1.1);
 }
 
-.cta-text {
+.cta-svg {
     position: absolute;
+    top: 0;
+    left: 0;
+    width: 120px;
+    height: 120px;
+    z-index: 1;
+}
+
+.circle-text {
     font-family: 'Sans-serif', Arial, sans-serif;
-    font-size: 0.7rem;
+    font-size: 6px;
     font-weight: 500;
-    color: #000000;
-    white-space: nowrap;
-    transform-origin: center;
-    animation: rotateText 20s linear infinite;
+    fill: #000000;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
 }
 
 .cta-arrow {
-    font-size: 1.2rem;
+    font-size: 1.8rem;
     color: #000000;
     font-weight: bold;
     z-index: 2;
-}
-
-@keyframes rotateText {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    position: relative;
 }
 
 /* ===== RESPONSIVE DESIGN ===== */
@@ -361,12 +369,16 @@ html {
         align-items: center;
     }
     
+    .hero-image-with-cta {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    
     .cta-button-container {
         position: static;
         transform: none;
         display: flex;
         justify-content: center;
-        margin-top: 2rem;
     }
     
     .hero-nav {
@@ -450,12 +462,23 @@ html {
     }
     
     .cta-button {
-        width: 70px;
-        height: 70px;
+        width: 100px;
+        height: 100px;
     }
     
-    .cta-text {
-        font-size: 0.6rem;
+    .cta-svg {
+        top: 0;
+        left: 0;
+        width: 100px;
+        height: 100px;
+    }
+    
+    .circle-text {
+        font-size: 5px;
+    }
+    
+    .cta-arrow {
+        font-size: 1.5rem;
     }
 }
 

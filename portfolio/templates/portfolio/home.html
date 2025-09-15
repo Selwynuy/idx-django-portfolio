@@ -35,15 +35,33 @@
 
             <!-- Center Section -->
             <div class="hero-center">
-                <div class="hero-image-container">
-                    <img src="/media/profile/profile.jpg" 
-                         alt="Fashionable man sitting on marble floor in a tan suit" 
-                         class="hero-image">
+                <div class="hero-image-with-cta">
+                    <div class="hero-image-container">
+                        <img src="/media/profile/profile.jpg" 
+                             alt="Fashionable man sitting on marble floor in a tan suit" 
+                             class="hero-image">
+                    </div>
                 </div>
             </div>
 
             <!-- Right Section -->
             <div class="hero-right">
+                <!-- CTA Button -->
+                <div class="cta-button-container">
+                    <button class="cta-button">
+                        <svg viewBox="0 0 120 120" width="120" height="120" class="cta-svg">
+                            <defs>
+                                <path id="circlePath" d="M60,60 m-45,0 a45,45 0 1,1 90,0 a45,45 0 1,1 -90,0" />
+                            </defs>
+                            <text class="circle-text">
+                                <textPath href="#circlePath" id="rotatingText" startOffset="0%">
+                                    HIRE ME TO MAKE YOURSELF BETTER • HIRE ME TO MAKE YOURSELF BETTER • HIRE ME TO MAKE YOURSELF BETTER •
+                                </textPath>
+                            </text>
+                        </svg>
+                        <div class="cta-arrow">→</div>
+                    </button>
+                </div>
                 <div class="stats-section">
                     <div class="stat-item">
                         <div class="stat-number">07</div>
@@ -59,14 +77,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-        <!-- CTA Button -->
-        <div class="cta-button-container">
-            <button class="cta-button">
-                <span class="cta-text">Hire Me To Make Yourself Better</span>
-                <div class="cta-arrow">→</div>
-            </button>
         </div>
     </div>
 </section>
@@ -561,6 +571,17 @@ document.addEventListener('DOMContentLoaded', function() {
         const width = bar.getAttribute('data-width');
         bar.style.width = width + '%';
     });
+    
+    // Animate circular text CTA
+    const rotatingText = document.getElementById('rotatingText');
+    if (rotatingText) {
+        let offset = 0;
+        setInterval(() => {
+            offset += 0.3;
+            if (offset >= 100) offset = 0;
+            rotatingText.setAttribute('startOffset', offset + '%');
+        }, 20); // 20ms interval for ultra-smooth continuous animation
+    }
 });
 </script>
 {% endblock %}
