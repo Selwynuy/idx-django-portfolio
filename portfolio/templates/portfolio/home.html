@@ -22,14 +22,15 @@
             <div class="hero-left">
                 <div class="hero-subsection">
                     <h1 class="hero-title">Selwyn Uy</h1>
-                    <p class="hero-description">“I'm a Next.js Developer & Frontend Engineer Based in Philippines. I craft seamless, high-performance web experiences for businesses and creators</p>
-                    <ul class="services-list">
+                    <p class="hero-description">"I'm a Next.js Developer & Frontend Engineer Based in Philippines. I craft seamless, high-performance web experiences for businesses and creators</p>
+                    <ul class="services-list mt-6">
                         <li>Web App Development</li>
                         <li>Next.js Website Design</li>
                         <li>API Integration</li>
                         <li>Performance Optimization</li>
                         <li>Responsive UI/UX</li>
                     </ul>
+                    
                 </div>
             </div>
 
@@ -41,6 +42,21 @@
                              alt="Fashionable man sitting on marble floor in a tan suit" 
                              class="hero-image">
                     </div>
+                    <!-- Mobile-only vertical stats next to the image -->
+                    <div class="mobile-stats-rail">
+                        <div class="mobile-key-stat">
+                            <div class="stat-number">07</div>
+                            <div class="stat-label">Years Experience</div>
+                        </div>
+                        <div class="mobile-key-stat">
+                            <div class="stat-number">10+</div>
+                            <div class="stat-label">Web Projects Delivered</div>
+                        </div>
+                        <div class="mobile-key-stat">
+                            <div class="stat-number">100%</div>
+                            <div class="stat-label">Satisfied Clients</div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -49,13 +65,13 @@
                 <!-- CTA Button -->
                 <div class="cta-button-container">
                     <button class="cta-button">
-                        <svg viewBox="0 0 120 120" width="120" height="120" class="cta-svg">
+                        <svg viewBox="0 0 160 160" width="160" height="160" class="cta-svg">
                             <defs>
-                                <path id="circlePath" d="M60,60 m-45,0 a45,45 0 1,1 90,0 a45,45 0 1,1 -90,0" />
+                                <path id="circlePathOuter" d="M80,80 m-70,0 a70,70 0 1,1 140,0 a70,70 0 1,1 -140,0" />
                             </defs>
                             <text class="circle-text">
-                                <textPath href="#circlePath" id="rotatingText" startOffset="0%">
-                                    HIRE ME TO MAKE YOURSELF BETTER • HIRE ME TO MAKE YOURSELF BETTER • HIRE ME TO MAKE YOURSELF BETTER •
+                                <textPath href="#circlePathOuter" startOffset="0%">
+                                    HIRE ME • NEXT.JS • FRONTEND • WEB EXPERIENCES •
                                 </textPath>
                             </text>
                         </svg>
@@ -572,16 +588,7 @@ document.addEventListener('DOMContentLoaded', function() {
         bar.style.width = width + '%';
     });
     
-    // Animate circular text CTA
-    const rotatingText = document.getElementById('rotatingText');
-    if (rotatingText) {
-        let offset = 0;
-        setInterval(() => {
-            offset += 0.3;
-            if (offset >= 100) offset = 0;
-            rotatingText.setAttribute('startOffset', offset + '%');
-        }, 20); // 20ms interval for ultra-smooth continuous animation
-    }
+    // Removed rotating CTA text animation per design update
 });
 </script>
 {% endblock %}

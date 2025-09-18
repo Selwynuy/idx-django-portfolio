@@ -20,16 +20,37 @@
     <!-- Main Navigation -->
     <nav class="hero-nav">
         <div class="nav-container">
-            <div class="nav-left">
+            <!-- Desktop Navigation -->
+            <div class="nav-left desktop-nav">
                 <a href="#home" class="nav-link scroll-smooth">Home</a>
                 <a href="#about" class="nav-link scroll-smooth">About</a>
             </div>
             <div class="nav-center">
-                <div class="logo">Selwyn Uy</div>
+                <div class="logo">Selwyn</div>
             </div>
-            <div class="nav-right">
+            <div class="nav-right desktop-nav">
                 <a href="#projects" class="nav-link scroll-smooth">Projects</a>
                 <a href="#contact" class="nav-link scroll-smooth">Contact</a>
+            </div>
+            
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-button" class="mobile-menu-button">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu">
+            <button id="mobile-menu-close" class="mobile-menu-close">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="mobile-menu-content">
+                <a href="#home" class="mobile-nav-link scroll-smooth">Home</a>
+                <a href="#about" class="mobile-nav-link scroll-smooth">About</a>
+                <a href="#projects" class="mobile-nav-link scroll-smooth">Projects</a>
+                <a href="#contact" class="mobile-nav-link scroll-smooth">Contact</a>
             </div>
         </div>
     </nav>
@@ -97,9 +118,41 @@
     <!-- JavaScript -->
     <script>
         // Mobile menu toggle
-        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenu.classList.toggle('hidden');
+            const mobileMenuClose = document.getElementById('mobile-menu-close');
+            
+            function toggleMobileMenu() {
+                if (mobileMenuButton && mobileMenu) {
+                    mobileMenuButton.classList.toggle('active');
+                    mobileMenu.classList.toggle('show');
+                }
+            }
+            
+            function closeMobileMenu() {
+                if (mobileMenuButton && mobileMenu) {
+                    mobileMenuButton.classList.remove('active');
+                    mobileMenu.classList.remove('show');
+                }
+            }
+            
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', toggleMobileMenu);
+            }
+            
+            if (mobileMenuClose && mobileMenu) {
+                mobileMenuClose.addEventListener('click', closeMobileMenu);
+            }
+            
+            // Close menu when clicking outside
+            if (mobileMenu) {
+                mobileMenu.addEventListener('click', function(e) {
+                    if (e.target === mobileMenu) {
+                        closeMobileMenu();
+                    }
+                });
+            }
         });
 
         // Smooth scrolling for anchor links
@@ -110,7 +163,11 @@
                 if (target) {
                     // Close mobile menu if open
                     const mobileMenu = document.getElementById('mobile-menu');
-                    mobileMenu.classList.add('hidden');
+                    const mobileMenuButton = document.getElementById('mobile-menu-button');
+                    if (mobileMenu && mobileMenuButton) {
+                        mobileMenu.classList.remove('show');
+                        mobileMenuButton.classList.remove('active');
+                    }
                     
                     // Smooth scroll to target
                     target.scrollIntoView({
@@ -136,11 +193,9 @@
             });
 
             navLinks.forEach(link => {
-                link.classList.remove('text-blue-600');
-                link.classList.add('text-gray-600');
+                link.classList.remove('nav-link-active');
                 if (link.getAttribute('href') === '#' + current) {
-                    link.classList.remove('text-gray-600');
-                    link.classList.add('text-blue-600');
+                    link.classList.add('nav-link-active');
                 }
             });
         });
